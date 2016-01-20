@@ -18,6 +18,11 @@
     
     if(name) {
         _placement = [TJPlacement placementWithName:name delegate:self];
+        
+        //Set Mediation Paramaters
+        _placement.mediationSource = @"mopub";
+        _placement.adapterVersion = @"2.0";
+        
         [_placement requestContent];
     }
     else {

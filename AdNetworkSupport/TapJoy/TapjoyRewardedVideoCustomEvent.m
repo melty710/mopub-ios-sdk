@@ -1,7 +1,7 @@
 
 #import "TapjoyRewardedVideoCustomEvent.h"
-#import <Tapjoy/TJPlacement.h>
 #import <Tapjoy/Tapjoy.h>
+#import <Tapjoy/TJPlacement.h>
 #import "MPRewardedVideoError.h"
 #import "MPLogging.h"
 #import "MPRewardedVideoReward.h"
@@ -20,7 +20,12 @@
     NSString *name = info[@"name"];
     
     if(name) {
-        _placement = [TJPlacement placementWithName:name delegate:self];
+        _placement = [TJPlacement placementWithName:name  delegate:self];
+        
+        //Set Mediation Paramaters
+        _placement.mediationSource = @"mopub";
+        _placement.adapterVersion = @"2.0";
+    
         [_placement requestContent];
     }
     else {
