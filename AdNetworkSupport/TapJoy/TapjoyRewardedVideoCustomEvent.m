@@ -1,10 +1,11 @@
 
 #import "TapjoyRewardedVideoCustomEvent.h"
-#import <Tapjoy/TJPlacement.h>
 #import <Tapjoy/Tapjoy.h>
+#import <Tapjoy/TJPlacement.h>
 #import "MPRewardedVideoError.h"
 #import "MPLogging.h"
 #import "MPRewardedVideoReward.h"
+#import "TapjoyInstanceMediationSettings.h"
 
 @interface TapjoyRewardedVideoCustomEvent () <TJPlacementDelegate, TJCVideoAdDelegate>
 @property (nonatomic, strong) TJPlacement *placement;
@@ -15,12 +16,21 @@
 - (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary *)info
 {
     MPLogInfo(@"Requesting Tapjoy rewarded video");
+    //Instantiate Mediation Settings
+    TapjoyInstanceMediationSettings *medSettings = [self.delegate instanceMediationSettingsForClass:[TapjoyInstanceMediationSettings class]];
+    
+    if (![Tapjoy isConnected]) {
+        [Tapjoy connect:medSettings.sdkKey
+                options:medSettings.connectFlags];
+    }
     
     // Grab placement name defined in MoPub dashboard as custom event data
     NSString *name = info[@"name"];
     
     if(name) {
-        _placement = [TJPlacement placementWithName:name delegate:self];
+        _placement = [TJPlacement placementWithName:name mediationAgent:@"mopub" mediationId:nil delegate:self];
+        _placement.adapterVersion = @"3.0";
+    
         [_placement requestContent];
     }
     else {
