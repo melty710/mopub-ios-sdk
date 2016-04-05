@@ -5,7 +5,8 @@
 #import "MPRewardedVideoError.h"
 #import "MPLogging.h"
 #import "MPRewardedVideoReward.h"
-#import "TapjoyInstanceMediationSettings.h"
+#import "TapjoyMediationSettings.h"
+#import "MoPub.h"
 
 @interface TapjoyRewardedVideoCustomEvent () <TJPlacementDelegate, TJCVideoAdDelegate>
 @property (nonatomic, strong) TJPlacement *placement;
@@ -17,7 +18,7 @@
 {
     MPLogInfo(@"Requesting Tapjoy rewarded video");
     //Instantiate Mediation Settings
-    TapjoyInstanceMediationSettings *medSettings = [self.delegate instanceMediationSettingsForClass:[TapjoyInstanceMediationSettings class]];
+    TapjoyMediationSettings *medSettings = [[MoPub sharedInstance] globalMediationSettingsForClass:[TapjoyMediationSettings class]];
     
     if (![Tapjoy isConnected]) {
         [Tapjoy connect:medSettings.sdkKey

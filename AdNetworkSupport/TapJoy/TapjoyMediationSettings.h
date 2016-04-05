@@ -1,3 +1,4 @@
+
 #import <Foundation/Foundation.h>
 
 #if __has_include(<MoPub/MoPub.h>)
@@ -6,7 +7,7 @@
     #import "MPMediationSettingsProtocol.h"
 #endif
 
-@interface TapjoyInstanceMediationSettings : NSObject <MPMediationSettingsProtocol>
+@interface TapjoyMediationSettings : NSObject <MPMediationSettingsProtocol>
 /*
  * @param sdkKey The application SDK Key. Retrieved from the app dashboard in your Tapjoy account.
  * Used to complete the connect call for a specific publisher, and is passed
